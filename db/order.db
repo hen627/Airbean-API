@@ -1,0 +1,7 @@
+{"order":[{"name":"Cortada","price":39},{"name":"Kaffe Latte","price":45}],"time":"Mon Apr 03 2023 16:04:51 GMT+0200 (centraleuropeisk sommartid)","userId":234,"orderNr":"a567f75c-d916-4a88-84ff-77c747d9c880","eta":21,"_id":"0d5tN7i9V37Ej6Ah"}
+{"order":[{"name":"Cortada","price":39},{"name":"Kaffe Latte","price":45}],"time":{"$$date":1680530674056},"userId":234,"orderNr":"7118cf63-8347-4810-878b-866656c8a327","eta":34,"_id":"FGm4J69GfvPMoTH8"}
+{"order":[{"name":"Cortada","price":39},{"name":"Kaffe Latte","price":45}],"time":1680530792122,"userId":234,"orderNr":"3881ecd8-e9c2-47aa-902e-f00bb82685ce","eta":23,"_id":"Fzbjox5WuaZZw7ia"}
+{"order":[{"name":"Cortada","price":39},{"name":"Kaffe Latte","price":45}],"time":1680530998138,"userId":234,"orderNr":"9a482f28-7831-4672-9541-843f98d96c04","eta":34,"_id":"GXqlpAMLNmvXS5vU"}
+{"order":[{"name":"Cortada","price":39},{"name":"Kaffe Latte","price":45}],"userId":234,"orderNr":"71495827-8e1a-4d59-81e4-aee11ac5e8d3","eta":20,"_id":"O1qaYQgdC9fuKGSM"}
+{"order":[{"name":"Cortada","price":39},{"name":"Kaffe Latte","price":45}],"userId":234,"orderNr":"7772b426-a7da-4d63-9ad9-1e127a0e2c06","eta":33,"_id":"d6fq6QRt0RDQRKF4"}
+{"order":[{"name":"Cortada","price":39},{"name":"Kaffe Latte","price":45}],"time":1680530842426,"userId":234,"orderNr":"1ce33edb-6862-4971-a5ea-67963704d963","eta":13,"_id":"vY27YEdIIPEtmqZg"}

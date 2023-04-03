@@ -1,10 +1,11 @@
 import {Router} from 'express'
-
+import {getProducts, addOrder, findOrder} from '../controllers/beansController.js'
 export const router = Router()
 
-router.get("/") // GET kaffemenyn
+router.get("/", getProducts) // GET kaffemenyn
 
-router.post("/order") // lägger en order
+router.post("/order", addOrder) // lägger en order
 
-router.get("order/status/:ordernr")
+router.get("/order/status/:ordernr", findOrder)
 //req.params
+

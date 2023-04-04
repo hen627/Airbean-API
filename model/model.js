@@ -11,7 +11,6 @@ export function getAllProducts() {
 
 export async function createOrder(order, userId = null) { // TODO kolla så att ordern inte är tom
     const time = Date.now()
-    console.log(time)
     const uuid = uuidv4()
     const eta = Math.floor(Math.random() * 30 + 10);
     await orderDB.insert({order: order, time: time, userId: userId, orderNr: uuid, eta: eta})
@@ -33,9 +32,39 @@ export async function searchOrder(orderNr) {
     } else {
         const orderTime = order.time
         const timePassed = Math.round((timeNow - orderTime) / 60000)
-        console.log(timePassed, order.eta)
         return {
-            eta: order.eta - timePassed
+            eta: order.eta - timePassed > 0 ? order.eta - timePassed : 0
+        }
+    }
+}
+
+export async function createUser(user) {
+    const userExists = await userDB.findOne({username: user.username})
+    if( userExists === null) {
+        await userDB.insert(user)
+        return {
+            success: true
+        }
+    } else {
+        return {
+            success: false,
+            msg: "Användarnamnet finns redan"
+        }
+    }
+}
+
+export async function checkUser(user) {
+    const userExists = await userDB.findOne({username: user.username, password: user.password})
+    if( userExists !== null) {
+        return {
+            success: true,
+            msg: "Inloggning lyckades " + userExists._id
+
+        }
+    } else {
+        return {
+            success: false,
+            msg: "Användar ID eller lösenord är fel"
         }
     }
 }

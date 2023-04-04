@@ -12,14 +12,16 @@ export function getAllProducts() {
 export async function createOrder(order, userId = null) { // TODO kolla så att ordern inte är tom
     const time = Date.now()
     const uuid = uuidv4()
+    const totalPrice = order.reduce((acc, curr) => acc + curr.price, 0)
     const eta = Math.floor(Math.random() * 30 + 10);
-    await orderDB.insert({order: order, time: time, userId: userId, orderNr: uuid, eta: eta})
-    const resObj = {
+    await orderDB.insert({order: order, time: time, userId: userId, orderNr: uuid, eta: eta, totalPrice: totalPrice})
+    return {
         eta: eta,
         orderNr: uuid
     }
-    return resObj
 }
+
+
 
 export async function searchOrder(orderNr) {
     const timeNow = Date.now()
@@ -66,5 +68,19 @@ export async function checkUser(user) {
             success: false,
             msg: "Användar ID eller lösenord är fel"
         }
+    }
+}
+
+export async function findHistory(id) {
+    const history = await orderDB.find({userId: id})
+    return {
+        success: true,
+        userId: id,
+        history: history.map(item => ({
+            orderNr: item.orderNr,
+            totalPrice: item.totalPrice,
+            orderDate: new Date(item.time).toLocaleString(),
+            orderDelivered: (Date.now() - item.time)/60000 > item.eta
+        }))
     }
 }

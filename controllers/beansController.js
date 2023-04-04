@@ -4,7 +4,6 @@ import {getAllProducts, createOrder, searchOrder} from "../model/model.js";
 export function getProducts(req, res) {
     getAllProducts()
         .then(data => {
-            console.log(data)
             res.json(data)
         })
         .catch(err => console.log(err))

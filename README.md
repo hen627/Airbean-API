@@ -3,7 +3,7 @@ Grupparbete Airbean API Speedy Gardeners
 
 ## Endpoints
 - ### GET /api/bean
-  - get all pruducts
+  - get all products
 
 - ### POST /api/bean/order
   - make an order

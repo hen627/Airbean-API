@@ -1,6 +1,5 @@
 import { getAllProducts, createOrder, searchOrder } from '../model/model.js'
 
-
 export function getProducts(req, res) {
     getAllProducts()
         .then(data => {

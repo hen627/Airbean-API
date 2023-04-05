@@ -9,6 +9,13 @@ app.use(express.json())
 app.use("/api/bean", beansRouter)
 app.use("/api/user", userRouter)
 
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        msg: "Sidan finns inte"
+    })
+})
+
 app.use((err, req, res, next) => {
     res.status(err.statusCode).json({
         success: false,

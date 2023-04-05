@@ -24,17 +24,10 @@ export async function createOrder(order, userId = null) {
 export async function searchOrder(orderNr) {
     const timeNow = Date.now()
     const order = await orderDB.findOne({orderNr: orderNr })
-    if( order === null) {
-        return {
-            success: false,
-            msg: "Ordernumret finns inte"
-        }
-    } else {
-        const orderTime = order.time
-        const timePassed = Math.round((timeNow - orderTime) / 60000)
-        return {
-            eta: order.eta - timePassed > 0 ? order.eta - timePassed : 0
-        }
+    const orderTime = order.time
+    const timePassed = Math.round((timeNow - orderTime) / 60000)
+    return {
+        eta: order.eta - timePassed > 0 ? order.eta - timePassed : 0
     }
 }
 
@@ -58,7 +51,7 @@ export async function checkUser(user) {
     if( userExists !== null) {
         return {
             success: true,
-            msg: "Inloggning lyckades " + userExists._id
+            msg: "Inloggning lyckades, id:" + userExists._id
         }
     } else {
         return {
@@ -80,4 +73,14 @@ export async function findHistory(id) {
             orderDelivered: (Date.now() - item.time)/60000 > item.eta
         }))
     }
+}
+
+export async function findUserId(id){
+    const searchResult = await userDB.findOne({_id: id})
+    return searchResult
+}
+
+export async function findOrderNr(orderNr){
+    const searchResult = await orderDB.findOne({orderNr: orderNr})
+    return searchResult
 }

@@ -9,7 +9,7 @@ export function getAllProducts() {
     return productDB.find({})
 }
 
-export async function createOrder(order, userId = null) { // TODO kolla så att ordern inte är tom
+export async function createOrder(order, userId = null) {
     const time = Date.now()
     const uuid = uuidv4()
     const totalPrice = order.reduce((acc, curr) => acc + curr.price, 0)
@@ -20,8 +20,6 @@ export async function createOrder(order, userId = null) { // TODO kolla så att 
         orderNr: uuid
     }
 }
-
-
 
 export async function searchOrder(orderNr) {
     const timeNow = Date.now()
@@ -61,7 +59,6 @@ export async function checkUser(user) {
         return {
             success: true,
             msg: "Inloggning lyckades " + userExists._id
-
         }
     } else {
         return {

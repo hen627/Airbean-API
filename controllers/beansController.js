@@ -1,4 +1,4 @@
-import {getAllProducts, createOrder, searchOrder} from "../model/model.js";
+import { getAllProducts, createOrder, searchOrder } from '../model/model.js'
 
 
 export function getProducts(req, res) {
@@ -6,7 +6,7 @@ export function getProducts(req, res) {
         .then(data => {
             res.json(data)
         })
-        .catch(err => console.log(err))
+        .catch(err => res.status(400).json(err))
 }
 
 export function addOrder(req, res) {
@@ -14,7 +14,7 @@ export function addOrder(req, res) {
         .then(result => {
             res.json(result)
         })
-        .catch(err => console.log(err))
+        .catch(err => res.status(400).json(err))
 }
 
 export function findOrder(req, res) {
@@ -23,5 +23,5 @@ export function findOrder(req, res) {
         .then(data => {
             res.json(data)
         })
-        .catch(err => console.log(err))
+        .catch(err => res.status(400).json(err))
 }

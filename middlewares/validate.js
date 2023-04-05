@@ -1,62 +1,6 @@
-import { getAllProducts } from "../model/model.js"
+import { getAllProducts } from '../model/model.js'
 
 const allProducts = await getAllProducts()
-// {
-//   "userId": "BJ8hbxOmt3vIamfu",
-//   "order": [
-//     {
-//       "name": "Cortada",
-//       "price": 39
-//     },
-//     {
-//       "name": "Kaffe Latte",
-//       "price": 45
-//     }
-//   ]
-// }
-
-export function validateOrder(req, res, next) {
-        console.log(req.body.order.length)
-    if(
-        Object.hasOwn(req.body, "userId") &&
-        Object.hasOwn(req.body, "order") &&
-        (typeof req.body.userId === "string" || typeof req.body.userId === null) &&
-        typeof req.body.order === "object" &&
-        req.body.order?.lenght !== 0
-        
-    ){
-        console.log(req.body.order.length)
-     
-        const obj = {}
-        for(let i = 0; i < req.body.order.length; i++) {
-            if(allProducts.some(item => item.title === req.body.order[i].name)){
-                console.log(req.body.order.length)
-            }
-        }
-        // const orderObj = req.body
-        // if(
-        //     orderObj.hasOwn(req.body, 'title') && 
-        //     orderObj.hasOwn(req.body, 'price') &&
-        //     typeof req.body.title === "string" &&
-        //     typeof req.body.price === "string"
-        // ){
-        //     req.body = {
-        //         title: req.body.title,
-        //         price: req.body.price
-        //     }
-        //     next()
-        // } else res.status(400).json({
-        //     sucess: false, 
-        //     mesg: 'Bad request'
-        // }
-       
-    } else {
-        res.status(400).json({
-            sucess: false,
-            msg: "Bad request."
-        })
-    }
-}
 
 export function validateUser(req, res, next) {
     if(
@@ -73,6 +17,56 @@ export function validateUser(req, res, next) {
     } else {
         res.status(400).json({
             sucess: false,
+            msg: "Bad request."
+        })
+    }
+}
+
+export function validateOrder(req, res, next) {
+    if(
+        Object.hasOwn(req.body, "userId") &&
+        Object.hasOwn(req.body, "order") &&
+        (typeof req.body.userId === "string" || typeof req.body.userId === "object") && // typeof null blir 'object'!!!
+        Array.isArray(req.body.order)
+    ){
+        if(req.body.order.length > 0) {
+            const validatedOrdersObject = []
+            
+            for(let i = 0; i < req.body.order.length; i++) {
+                const validateOneOrder = {}
+                const productName = allProducts.find(item => item.title === req.body.order[i].name)
+                if(productName) {
+                    validateOneOrder.name = req.body.order[i].name
+                } else {
+                    res.status(400).json({
+                        success: false,
+                        msg: "No order with that name"
+                    })
+                }
+                if(productName.price === req.body.order[i].price) {
+                    validateOneOrder.price = req.body.order[i].price
+                    validatedOrdersObject.push(validateOneOrder)
+                } else {
+                    res.status(400).json({
+                        success: false,
+                        msg: "Priset matchar inte"
+                    })
+                }
+            }
+            req.body = {
+                userId: req.body.userId,
+                order: validatedOrdersObject
+            }
+            next()
+        } else {
+            res.status(400).json({
+                success: false,
+                msg: "Inga ordrar i varukorgen"
+            })
+        }
+    } else {
+        res.status(400).json({
+            success: false,
             msg: "Bad request."
         })
     }
